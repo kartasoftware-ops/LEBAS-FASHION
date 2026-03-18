@@ -2,400 +2,410 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEBAS Fashion Designing | Tailoring Excellence for Every Profession</title>
-    <meta name="description"
-        content="LEBAS Fashion Designing – Premium custom uniform manufacturing in Dubai. Serving restaurants, corporate offices, healthcare, hospitality, and more.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LEBAS FASHION — Elegance Redefined</title>
+  <meta name="description"
+    content="LEBAS FASHION — Premium fashion designing. Explore our exclusive collections of professional and luxury attire.">
+  <meta name="keywords" content="fashion, lebas, premium clothing, professional attire, luxury design">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="LEBAS FASHION DESIGNINGLogo.png" type="image/png">
 </head>
 
 <body>
 
-    <!-- ====== Sticky Navigation ====== -->
-    <header class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <img src="LEBAS FASHION DESIGNINGLogo.png" alt="LEBAS Fashion Designing Logo">
-            </a>
-            <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <nav>
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#values">Core Values</a></li>
-                    <li><a href="#expertise">Industries</a></li>
-                    <li><a href="#why-us">Why Us</a></li>
-                    <li><a href="#contact" class="btn-nav">Contact Us</a></li>
-                </ul>
-            </nav>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container"></div>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo" id="navLogo">
+        <img src="LEBAS FASHION DESIGNINGLogo.png" alt="LEBAS FASHION Logo">
+        <span></span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#hero" class="active" data-section="hero">Home</a>
+        <a href="#categories" data-section="categories">Collections</a>
+        <a href="#featured" data-section="featured">Featured</a>
+        <a href="#brand" data-section="brand">Brand Story</a>
+        <a href="#contact" data-section="contact">Contact</a>
+      </div>
+
+      <div class="nav-search" id="navSearch">
+        <span class="search-icon"></span>
+        <input type="text" id="searchInput" placeholder="Search products..." autocomplete="off">
+      </div>
+
+      <div class="nav-hamburger" id="navHamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search Results -->
+  <div class="search-results-overlay" id="searchResults"></div>
+
+  <!-- ============ HERO SECTION ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-slider" id="heroSlider">
+      <!-- Slides populated by JS -->
+    </div>
+    <div class="hero-content">
+      <p class="hero-subtitle" id="heroSubtitle">LEBAS-FASHION</p>
+      <h1 class="hero-title" id="heroTitle">Elegance Redefined</h1>
+      <a href="#categories" class="hero-btn">Explore Collections</a>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORIES ============ -->
+  <section class="categories-section section-padding" id="categories">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="section-title reveal">Our Collections</h2>
+      <p class="section-subtitle reveal">Discover our curated range of premium categories</p>
+      <div class="categories-grid" id="categoriesGrid">
+        <!-- Dynamic -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BROWSE (Subcategories / Gender / Products) ============ -->
+  <section class="section-padding" id="browseSection" style="display:none;">
+    <div class="container">
+      <div class="breadcrumb-nav" id="breadcrumb"></div>
+
+      <!-- Subcategory View -->
+      <div id="subcategoryView" style="display:none;">
+        <h2 class="section-title" id="subcategoryTitle"></h2>
+        <div class="subcategory-grid" id="subcategoryGrid"></div>
+      </div>
+
+      <!-- Gender View -->
+      <div id="genderView" style="display:none;">
+        <h2 class="section-title" id="genderTitle"></h2>
+        <div class="gender-grid" id="genderGrid"></div>
+      </div>
+
+      <!-- Products View -->
+      <div id="productsView" style="display:none;">
+        <h2 class="section-title" id="productsTitle"></h2>
+        <div class="products-filter-bar" id="productsFilterBar"></div>
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="empty-state" id="productsEmpty" style="display:none;">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              style="width:48px;height:48px;">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm5.625 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+            </svg>
+          </div>
+          <p>No products found in this collection yet.</p>
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <!-- ====== Hero Section ====== -->
-    <section class="hero" id="home">
-        <div class="hero-bg-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
-        <div class="container layout-grid hero-container">
-            <div class="hero-content">
-                <span class="hero-tag">Premium Uniform Manufacturing – Dubai</span>
-                <h1 class="hero-title">Tailoring Excellence<br><span class="title-accent">for Every Profession</span>
-                </h1>
-                <p class="hero-subtitle">High-quality, stylish, and functional custom uniforms crafted to elevate your
-                    brand image.</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get a Custom Quote <i
-                            class="fa-solid fa-arrow-right"></i></a>
-                    <a href="#expertise" class="btn btn-secondary">Explore Industries</a>
-                </div>
-            </div>
-            <div class="hero-image-grid">
-                <div class="hero-img-pillar pillar-down">
-                    <img src="images/corporate.png" alt="Corporate Uniforms">
-                    <img src="images/security.png" alt="Security Uniforms">
-                </div>
-                <div class="hero-img-pillar pillar-up">
-                    <img src="images/restaurant.png" alt="Restaurant Uniforms">
-                    <img src="images/medical.png" alt="Medical Uniforms">
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ============ FEATURED PRODUCTS ============ -->
+  <section class="featured-section section-padding" id="featured">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="section-title reveal">Featured Collection</h2>
+      <p class="section-subtitle reveal">Handpicked pieces that define excellence</p>
+      <div class="featured-slider" id="featuredSlider">
+        <!-- Dynamic -->
+      </div>
+      <div class="slider-controls" id="sliderControls">
+        <button class="slider-btn" id="sliderPrev">←</button>
+        <button class="slider-btn" id="sliderNext">→</button>
+      </div>
+    </div>
+  </section>
 
-    <!-- ====== About Section ====== -->
-    <section class="about" id="about">
-        <div class="container layout-grid">
-            <div class="about-text scroll-reveal">
-                <span class="section-tag">About Us</span>
-                <h2>Premium Uniforms that Elevate Your Brand Image.</h2>
-                <p>LEBAS Fashion Designing is a trusted uniform manufacturing company located in Dubai. We specialize in
-                    providing custom-designed, high-quality, and modern uniforms tailored to your industry's specific
-                    needs.</p>
-                <p><strong>Our Mission:</strong> To deliver premium uniforms that improve professional image, ensure
-                    maximum comfort for long working hours, and incorporate modern design combined with superior
-                    craftsmanship.</p>
-            </div>
-            <div class="about-image scroll-reveal-right">
-                <div class="image-wrapper glass-panel p-0">
-                    <img src="images/hospitality.png" alt="High Quality Uniform Manufacturing"
-                        class="section-featured-img">
-                    <div class="experience-badge">
-                        <h3>Premium Quality</h3>
-                        <p>Custom Made in Dubai</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ============ HOVER EXPAND GALLERY ============ -->
+  <section class="section-padding" id="gallerySection">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="section-title reveal">Gallery</h2>
+      <p class="section-subtitle reveal">Explore our finest creations</p>
+      <div class="expand-gallery reveal" id="expandGallery">
+        <!-- Dynamic: filled from featured product images -->
+      </div>
+    </div>
+  </section>
 
-    <!-- ====== Core Values Section ====== -->
-    <section class="values" id="values">
-        <div class="container text-center">
-            <span class="section-tag">Our Philosophy</span>
-            <h2 class="section-title">Core Values</h2>
-            <div class="values-grid">
-                <div class="value-card staggered-card">
-                    <div class="icon-wrapper"><i class="fa-solid fa-medal"></i></div>
-                    <h3>Quality</h3>
-                    <p>Strong fabric selection, durable stitching, and comfortable finishing designed to last.</p>
-                </div>
-                <div class="value-card staggered-card">
-                    <div class="icon-wrapper"><i class="fa-solid fa-lightbulb"></i></div>
-                    <h3>Innovation</h3>
-                    <p>Blending modern fashion trends with new fabric technologies for functional elegance.</p>
-                </div>
-                <div class="value-card staggered-card">
-                    <div class="icon-wrapper"><i class="fa-solid fa-handshake-angle"></i></div>
-                    <h3>Satisfaction</h3>
-                    <p>Providing custom solutions and highly personalized service for every B2B client.</p>
-                </div>
-                <div class="value-card staggered-card">
-                    <div class="icon-wrapper"><i class="fa-solid fa-scale-balanced"></i></div>
-                    <h3>Integrity</h3>
-                    <p>Transparent, honest, and reliable business partnerships you can count on.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ============ BRAND STORY ============ -->
+  <section class="brand-section section-padding" id="brand">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="section-title reveal">The Lebas Legacy</h2>
+      <p class="section-subtitle reveal">Crafting uniforms that elevate professional image</p>
 
-    <!-- ====== Industries Served Section — Expanding Carousel ====== -->
-    <section class="expertise" id="expertise">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="section-tag">Our Expertise</span>
-                <h2 class="section-title">Industries We Serve</h2>
-                <p class="section-subtitle">Click on any panel to explore — we design custom uniforms for every
-                    profession.</p>
-            </div>
+      <div class="brand-grid reveal">
+        <!-- About -->
+        <div class="premium-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+            </svg>
+          </div>
+          <h3>Our Journey</h3>
+          <p id="aboutText">Loading...</p>
         </div>
 
-        <!-- Full-width Expanding Panels Carousel -->
-        <div class="carousel-wrapper">
-            <div class="carousel-panels" id="carousel-panels">
-                <div class="panel active" data-industry="Restaurants"
-                    style="background-image: url('images/restaurant.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-utensils"></i>
-                        <h4>Restaurants</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Security" style="background-image: url('images/security.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <h4>Security</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Hospitality" style="background-image: url('images/hospitality.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-bell-concierge"></i>
-                        <h4>Hospitality</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Medical Centres" style="background-image: url('images/medical.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-user-doctor"></i>
-                        <h4>Medical Centres</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Corporate Offices"
-                    style="background-image: url('images/corporate.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-briefcase"></i>
-                        <h4>Corporate Offices</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Education" style="background-image: url('images/education.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        <h4>Education</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Retail" style="background-image: url('images/retail.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-store"></i>
-                        <h4>Retail</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Healthcare" style="background-image: url('images/healthcare.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                        <h4>Healthcare</h4>
-                    </div>
-                </div>
-                <div class="panel" data-industry="Sports & Fitness" style="background-image: url('images/sports.png')">
-                    <div class="panel-overlay"></div>
-                    <div class="panel-content">
-                        <i class="fa-solid fa-dumbbell"></i>
-                        <h4>Sports & Fitness</h4>
-                    </div>
-                </div>
-            </div>
+        <!-- Philosophy -->
+        <div class="premium-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09l2.846.813-.813 2.846a4.5 4.5 0 00-3.09 3.09L12 18.75z" />
+            </svg>
+          </div>
+          <h3>Our Philosophy</h3>
+          <p id="philosophyText">Loading...</p>
         </div>
-    </section>
 
-    <!-- ====== Why Choose Us ====== -->
-    <section class="why-us" id="why-us">
-        <div class="container layout-grid reverse-grid">
-            <div class="why-us-image scroll-reveal-left">
-                <div class="image-wrapper glass-panel p-0">
-                    <img src="images/education.png" alt="Premium Uniform Craftsmanship" class="section-featured-img">
-                </div>
-            </div>
-            <div class="why-us-text scroll-reveal">
-                <span class="section-tag">Premium Offering</span>
-                <h2>Why Choose LEBAS Fashion?</h2>
-                <ul class="feature-list">
-                    <li>
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <h4>100% Custom-Made</h4>
-                            <p>Every uniform is crafted per your exact company and industry needs — nothing off the
-                                rack.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <h4>Professional Appearance</h4>
-                            <p>Elevate your brand presence with sharp, modern, and stylish uniform designs.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <h4>Exceptional Comfort</h4>
-                            <p>Engineered for long working hours without compromising on breathability or ease of
-                                movement.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-check"></i>
-                        <div>
-                            <h4>Outstanding Durability</h4>
-                            <p>Built with robust fabrics and durable stitching to withstand rigorous daily use.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <!-- Premium Offering -->
+        <div class="premium-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+            </svg>
+          </div>
+          <h3>Premium Quality</h3>
+          <p id="premiumText">Loading...</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- ====== Contact Us Section (Form + Info) ====== -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="section-tag">Get In Touch</span>
-                <h2 class="section-title">Contact Us</h2>
-                <p class="section-subtitle">Partner with us for bulk orders, long-term contracts, and custom uniform
-                    solutions.</p>
+  <!-- ============ CONTACT ============ -->
+  <section class="contact-section section-padding" id="contact">
+    <div class="container">
+      <div class="section-divider reveal"></div>
+      <h2 class="section-title reveal">Get In Touch</h2>
+      <p class="section-subtitle reveal">We'd love to hear from you</p>
+      <div class="contact-wrapper reveal">
+        <!-- Contact Info Column -->
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.273-3.973-6.869-6.869l1.293-.97c.362-.271.527-.733.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
             </div>
-
-            <div class="contact-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-card glass-panel bounce-in">
-                    <h3>Send Us a Message</h3>
-                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-                        <!-- Web3Forms Access Key (Replace YOUR_ACCESS_KEY_HERE with the key obtained from Web3Forms for info@lebasfashion.com) -->
-                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                        <input type="hidden" name="subject" value="New Inquiry from LEBAS Fashion Website">
-                        <input type="hidden" name="from_name" value="LEBAS Fashion Landing Page">
-                        <input type="hidden" name="replyto" id="replyto">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your full name" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="you@company.com"
-                                    onchange="document.getElementById('replyto').value = this.value" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="+971 xxxxxxxxx">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="industry">Industry</label>
-                            <select id="industry" name="industry">
-                                <option value="">Select your industry</option>
-                                <option value="restaurants">Restaurants</option>
-                                <option value="security">Security</option>
-                                <option value="hospitality">Hospitality</option>
-                                <option value="medical">Medical Centres</option>
-                                <option value="corporate">Corporate Offices</option>
-                                <option value="retail">Retail</option>
-                                <option value="education">Education</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="sports">Sports & Fitness</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="4"
-                                placeholder="Tell us about your uniform needs..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">
-                            Send Message <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </form>
-                    <div class="form-success" id="form-success" style="display:none;">
-                        <i class="fa-solid fa-circle-check"></i>
-                        <h4>Thank you!</h4>
-                        <p>Your message has been sent. We'll get back to you shortly.</p>
-                    </div>
-                </div>
-
-                <!-- Contact Info Card -->
-                <div class="contact-info-card bounce-in">
-                    <div class="info-card-header">
-                        <h3>Contact Information</h3>
-                        <p>Reach out to us directly — we'd love to hear from you.</p>
-                    </div>
-                    <div class="info-items">
-                        <div class="info-item">
-                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-                            <div>
-                                <h4>Call Us</h4>
-                                <a href="tel:+971529101245">+971 529101245</a>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-                            <div>
-                                <h4>Email Us</h4>
-                                <a href="mailto:info@lebasfashion.com">info@lebasfashion.com</a>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-                            <div>
-                                <h4>Visit Us</h4>
-                                <p>Al Quasis Industrial Area 4,<br>Dream Building No#2, Dubai</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
-                            <div>
-                                <h4>Working Hours</h4>
-                                <p>Sunday - Thursday: 9AM - 6PM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://wa.me/971529101245" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
-                </div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value" id="contactPhone">—</div>
             </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value" id="contactEmail">—</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Address</div>
+              <div class="contact-value" id="contactAddress">—</div>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <!-- ====== Footer ====== -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">
-                <a href="#" class="logo footer-logo">
-                    <img src="LEBAS FASHION DESIGNINGLogo.png" alt="LEBAS Fashion Designing">
-                </a>
-                <p>Tailoring Excellence for Every Profession.</p>
+        <!-- Contact Form Column -->
+        <div class="contact-form-container">
+          <form class="contact-form" id="contactForm">
+            <!-- Web3Forms Access Key: Add yours here -->
+            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <div class="form-group">
+              <label for="frmName">Name</label>
+              <input type="text" id="frmName" name="name" placeholder="John Doe" required>
             </div>
-            <div class="footer-links">
-                <p>&copy; <span id="year"></span> LEBAS Fashion Designing. All Rights Reserved.</p>
+
+            <div class="form-group">
+              <label for="frmEmail">Email</label>
+              <input type="email" id="frmEmail" name="email" placeholder="john@example.com" required>
             </div>
+
+            <div class="form-group">
+              <label for="frmPhone">Phone Number</label>
+              <input type="tel" id="frmPhone" name="phone" placeholder="+1 (555) 000-0000" required>
+            </div>
+
+            <div class="form-group">
+              <label for="frmIndustry">Industry</label>
+              <select id="frmIndustry" name="industry" required>
+                <option value="" disabled selected>Select your industry</option>
+                <option value="Corporate">Corporate Offices</option>
+                <option value="Hospitality">Hospitality & Restaurants</option>
+                <option value="Healthcare">Healthcare & Medical</option>
+                <option value="Retail">Retail</option>
+                <option value="Education">Education</option>
+                <option value="Security">Security</option>
+                <option value="Sports">Sports & Fitness</option>
+                <option value="Other">Other Category</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="frmMessage">Message</label>
+              <textarea id="frmMessage" name="message" rows="4" placeholder="How can we help you?" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="contactSubmitBtn">Send Message</button>
+          </form>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Custom JS -->
-    <script src="script.js"></script>
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="LEBAS FASHION DESIGNINGLogo.png" alt="LEBAS FASHION">
+          <span>LEBAS FASHION</span>
+        </div>
+        <div class="footer-links">
+          <a href="#brand">Brand Story</a>
+          <a href="#categories">Collections</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span id="footerYear"></span> LEBAS FASHION. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ PRODUCT MODAL ============ -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-content" style="position:relative;">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-images">
+        <img class="modal-main-image" id="modalMainImage" src="" alt="Product">
+        <div class="modal-thumbnails" id="modalThumbnails"></div>
+      </div>
+      <div class="modal-details">
+        <h2 class="modal-product-name" id="modalProductName"></h2>
+        <p class="modal-product-price" id="modalProductPrice"></p>
+        <p class="modal-product-desc" id="modalProductDesc"></p>
+        <div>
+          <p
+            style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">
+            Available Sizes</p>
+          <div class="modal-sizes" id="modalSizes"></div>
+        </div>
+        <a class="modal-whatsapp-btn" id="modalWhatsappBtn" href="#" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            style="width:20px;height:20px;margin-right:8px;">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+          </svg>
+          Inquire via WhatsApp
+        </a>
+        <button class="modal-chat-btn" id="modalChatBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px;margin-right:8px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+          </svg>
+          Chat with Support
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ AI CHATBOT MODAL ============ -->
+  <div class="chatbot-modal" id="chatbotModal">
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+          </svg>
+        </div>
+        <div>
+          <span class="chatbot-name">LEBAS Live Support</span>
+          <span class="chatbot-status">Online</span>
+        </div>
+      </div>
+      <button class="chatbot-close" id="chatbotClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chat-msg bot">
+        <p>Welcome to LEBAS Fashion! Send us a message and our team will reply shortly.</p>
+      </div>
+    </div>
+    <div class="chatbot-input-bar">
+      <input type="text" id="chatbotInput" placeholder="Ask about our products..." autocomplete="off">
+      <button id="chatbotSend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- WhatsApp Float -->
+  <a class="whatsapp-float" id="whatsappFloat" href="#" target="_blank" title="Chat with us on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+    </svg>
+  </a>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+    </svg>
+  </button>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/client.js"></script>
 </body>
 
 </html>

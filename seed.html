@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seed Data — LEBAS FASHION</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="login-body">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <img src="LEBAS FASHION DESIGNINGLogo.png" alt="LEBAS FASHION" class="login-logo">
+      <h1 class="login-title">Seed Database</h1>
+      <p class="login-subtitle">Populate Firebase with initial business data</p>
+      <button class="login-btn" id="seedBtn">🚀 Seed Data Now</button>
+      <p class="login-error" id="seedStatus" style="color:var(--admin-success);"></p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script>
+    document.getElementById('seedBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('seedBtn');
+      const status = document.getElementById('seedStatus');
+      
+      if (!auth || !auth.currentUser) {
+        status.textContent = '❌ Error: You must log in as an Admin at login.html first!';
+        status.style.color = 'var(--admin-danger)';
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.textContent = 'Seeding...';
+      status.textContent = '';
+
+      try {
+        // ========== SITE CONTENT ==========
+        await db.ref('siteContent').set({
+          hero: {
+            title: "Tailoring Excellence for Every Profession",
+            subtitle: "LEBAS FASHION DESIGNING",
+            image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80"
+          },
+          about: {
+            text: "LEBAS Fashion Designing is a premier uniform manufacturing company based in Dubai. We specialize in crafting high-quality, stylish, and functional uniforms that serve multiple industries with custom-designed solutions. Our core belief is simple yet powerful: \"Tailoring Excellence for Every Profession.\" Every stitch we make reflects our dedication to quality, comfort, and modern design. From restaurants to corporate offices, from medical centres to sports teams — we deliver uniforms that elevate professional image while ensuring all-day comfort and durability."
+          },
+          philosophy: {
+            text: "At LEBAS Fashion Designing, our mission and vision converge into one powerful purpose: to deliver premium uniforms that improve professional image, ensure lasting comfort, and combine modern design with masterful craftsmanship. We believe that what you wear at work shapes how you feel, how you perform, and how others perceive you. That's why we pour innovation, integrity, and passion into every uniform we create — because every profession deserves to look and feel exceptional."
+          },
+          premium: {
+            text: "Every LEBAS uniform is custom-made — never off-the-rack. Each piece is designed per industry needs with an unwavering focus on professional appearance, comfort for long working hours, superior durability, and modern style. Our core values drive everything we do: Quality through strong fabric selection, durable stitching, and comfortable finishing; Innovation by integrating modern trends with new technologies; Customer Satisfaction through personalized service and custom solutions; and Integrity with transparent, honest business practices."
+          },
+          contact: {
+            phone: "+971 529101245",
+            email: "info@lebasfashion.com",
+            address: "Al Quasis Industrial Area 4, Dubai, UAE"
+          },
+          theme: {
+            primary: "#8B0000",
+            secondary: "#F5E6D3"
+          }
+        });
+        console.log('✅ Site content seeded');
+
+        // ========== CATEGORIES ==========
+        const categories = {
+          restaurants: { name: "Restaurants", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80", order: 1 },
+          security: { name: "Security", image: "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&q=80", order: 2 },
+          hospitality: { name: "Hospitality", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", order: 3 },
+          medical: { name: "Medical Centres", image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80", order: 4 },
+          corporate: { name: "Corporate Offices", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", order: 5 },
+          retail: { name: "Retail", image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80", order: 6 },
+          education: { name: "Education", image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80", order: 7 },
+          healthcare: { name: "Healthcare", image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=800&q=80", order: 8 },
+          sports: { name: "Sports & Fitness", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80", order: 9 }
+        };
+
+        const catRefs = {};
+        for (const [key, cat] of Object.entries(categories)) {
+          const ref = db.ref('categories').push();
+          await ref.set(cat);
+          catRefs[key] = ref.key;
+          console.log(`✅ Category: ${cat.name}`);
+        }
+
+        // ========== SUBCATEGORIES ==========
+        const subcategories = [
+          { categoryKey: 'restaurants', name: "Chef Uniform", image: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80" },
+          { categoryKey: 'restaurants', name: "Waiter Uniform", image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80" },
+          { categoryKey: 'restaurants', name: "Kitchen Staff", image: "" },
+          { categoryKey: 'security', name: "Guard Uniform", image: "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&q=80" },
+          { categoryKey: 'security', name: "Patrol Wear", image: "" },
+          { categoryKey: 'hospitality', name: "Front Desk", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" },
+          { categoryKey: 'hospitality', name: "Housekeeping", image: "" },
+          { categoryKey: 'medical', name: "Doctor Coat", image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" },
+          { categoryKey: 'medical', name: "Nurse Dress", image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" },
+          { categoryKey: 'medical', name: "Scrubs", image: "" },
+          { categoryKey: 'corporate', name: "Formal Wear", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" },
+          { categoryKey: 'corporate', name: "Business Casual", image: "" },
+          { categoryKey: 'retail', name: "Store Uniform", image: "" },
+          { categoryKey: 'education', name: "School Uniform", image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" },
+          { categoryKey: 'education', name: "Staff Uniform", image: "" },
+          { categoryKey: 'healthcare', name: "Lab Coat", image: "" },
+          { categoryKey: 'healthcare', name: "Nurse Uniform", image: "" },
+          { categoryKey: 'sports', name: "Gym Wear", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80" },
+          { categoryKey: 'sports', name: "Team Kit", image: "" }
+        ];
+
+        const subRefs = {};
+        for (const sub of subcategories) {
+          const ref = db.ref('subcategories').push();
+          await ref.set({
+            categoryId: catRefs[sub.categoryKey],
+            name: sub.name,
+            image: sub.image
+          });
+          subRefs[sub.name] = ref.key;
+          console.log(`✅ Subcategory: ${sub.name}`);
+        }
+
+        // ========== GENDER TYPES ==========
+        const genderEntries = [
+          { subName: "Chef Uniform", gender: "Men" },
+          { subName: "Chef Uniform", gender: "Women" },
+          { subName: "Waiter Uniform", gender: "Men" },
+          { subName: "Waiter Uniform", gender: "Women" },
+          { subName: "Guard Uniform", gender: "Men" },
+          { subName: "Doctor Coat", gender: "Men" },
+          { subName: "Doctor Coat", gender: "Women" },
+          { subName: "Nurse Dress", gender: "Women" },
+          { subName: "Scrubs", gender: "Unisex" },
+          { subName: "Formal Wear", gender: "Men" },
+          { subName: "Formal Wear", gender: "Women" },
+          { subName: "School Uniform", gender: "Men" },
+          { subName: "School Uniform", gender: "Women" },
+          { subName: "Gym Wear", gender: "Men" },
+          { subName: "Gym Wear", gender: "Women" },
+          { subName: "Team Kit", gender: "Unisex" }
+        ];
+
+        for (const entry of genderEntries) {
+          if (subRefs[entry.subName]) {
+            await db.ref('genderTypes').push().set({
+              subcategoryId: subRefs[entry.subName],
+              name: entry.gender
+            });
+            console.log(`✅ Gender: ${entry.subName} → ${entry.gender}`);
+          }
+        }
+
+        // ========== SAMPLE PRODUCTS ==========
+        const products = [
+          {
+            name: "Premium Chef Coat",
+            price: 350,
+            categoryId: catRefs['restaurants'],
+            subcategoryId: subRefs['Chef Uniform'],
+            gender: "Men",
+            sizes: ["S", "M", "L", "XL", "XXL"],
+            images: ["https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80"],
+            description: "Premium custom-made chef coat with breathable fabric, durable stitching, and modern cut. Designed for long hours in the kitchen while maintaining a sharp professional look.",
+            featured: true
+          },
+          {
+            name: "Medical Doctor Coat",
+            price: 280,
+            categoryId: catRefs['medical'],
+            subcategoryId: subRefs['Doctor Coat'],
+            gender: "Men",
+            sizes: ["S", "M", "L", "XL"],
+            images: ["https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80"],
+            description: "Professional doctor coat crafted with premium cotton-blend fabric. Features comfort-fit design for long working hours with elegant finishing.",
+            featured: true
+          },
+          {
+            name: "Security Guard Uniform",
+            price: 420,
+            categoryId: catRefs['security'],
+            subcategoryId: subRefs['Guard Uniform'],
+            gender: "Men",
+            sizes: ["M", "L", "XL", "XXL"],
+            images: ["https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&q=80"],
+            description: "Durable security guard uniform with reinforced stitching and comfortable fabric. Custom-designed for a commanding professional appearance.",
+            featured: true
+          },
+          {
+            name: "Corporate Formal Blazer",
+            price: 550,
+            categoryId: catRefs['corporate'],
+            subcategoryId: subRefs['Formal Wear'],
+            gender: "Men",
+            sizes: ["S", "M", "L", "XL"],
+            images: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"],
+            description: "Tailored corporate blazer with premium fabric and modern slim fit. Perfect for executives and office professionals seeking a polished look.",
+            featured: true
+          },
+          {
+            name: "Nurse Scrub Set",
+            price: 220,
+            categoryId: catRefs['medical'],
+            subcategoryId: subRefs['Scrubs'],
+            gender: "Unisex",
+            sizes: ["S", "M", "L", "XL"],
+            images: ["https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80"],
+            description: "Comfortable unisex scrub set with anti-microbial fabric. Designed for healthcare professionals who need comfort and functionality throughout the day.",
+            featured: false
+          },
+          {
+            name: "Hotel Front Desk Uniform",
+            price: 380,
+            categoryId: catRefs['hospitality'],
+            subcategoryId: subRefs['Front Desk'],
+            gender: "Women",
+            sizes: ["S", "M", "L"],
+            images: ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80"],
+            description: "Elegant front desk uniform designed for hospitality staff. Features modern styling with comfortable fabric for long shifts.",
+            featured: true
+          }
+        ];
+
+        for (const product of products) {
+          await db.ref('products').push().set(product);
+          console.log(`✅ Product: ${product.name}`);
+        }
+
+        status.textContent = '✅ All data seeded successfully! You can now view your site.';
+        status.style.color = 'var(--admin-success)';
+        btn.textContent = '✅ Done!';
+        console.log('🎉 All seed data has been written to Firebase!');
+
+      } catch (err) {
+        status.textContent = '❌ Error: ' + err.message;
+        status.style.color = 'var(--admin-danger)';
+        btn.disabled = false;
+        btn.textContent = '🚀 Retry Seed';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
