@@ -475,6 +475,7 @@
         gender: document.getElementById('productGender').value,
         description: document.getElementById('productDescription').value.trim(),
         featured: document.getElementById('productFeatured').value === 'true',
+        sizeChart: document.getElementById('productSizeChart').value.trim(),
         sizes: sizes,
         images: images
       };
@@ -506,6 +507,7 @@
     document.getElementById('productFeatured').value = 'false';
     document.getElementById('productFeaturedToggle').classList.remove('active');
     document.getElementById('productFeaturedLabel').textContent = 'No';
+    document.getElementById('productSizeChart').value = '';
 
     // Reset dynamic inputs
     document.getElementById('sizesContainer').innerHTML = `
@@ -541,6 +543,7 @@
 
     document.getElementById('productGender').value = product.gender || '';
     document.getElementById('productDescription').value = product.description || '';
+    document.getElementById('productSizeChart').value = product.sizeChart || '';
 
     const isFeatured = product.featured === true;
     document.getElementById('productFeatured').value = isFeatured ? 'true' : 'false';

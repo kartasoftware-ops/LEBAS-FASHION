@@ -86,6 +86,9 @@
     modalProductPrice: document.getElementById('modalProductPrice'),
     modalProductDesc: document.getElementById('modalProductDesc'),
     modalSizes: document.getElementById('modalSizes'),
+    modalSizeChartBtn: document.getElementById('modalSizeChartBtn'),
+    modalSizeChartContainer: document.getElementById('modalSizeChartContainer'),
+    modalSizeChartImg: document.getElementById('modalSizeChartImg'),
     modalWhatsappBtn: document.getElementById('modalWhatsappBtn'),
     // WhatsApp
     whatsappFloat: document.getElementById('whatsappFloat'),
@@ -676,6 +679,28 @@
       const tag = createElement('span', 'modal-size-tag', escapeHtml(s));
       DOM.modalSizes.appendChild(tag);
     });
+
+    // Size Chart
+    if (product.sizeChart) {
+      DOM.modalSizeChartBtn.style.display = 'inline-block';
+      DOM.modalSizeChartImg.src = product.sizeChart;
+      DOM.modalSizeChartContainer.style.display = 'none';
+      DOM.modalSizeChartBtn.textContent = 'View Size Chart';
+
+      // Clone to remove old listeners
+      const newBtn = DOM.modalSizeChartBtn.cloneNode(true);
+      DOM.modalSizeChartBtn.parentNode.replaceChild(newBtn, DOM.modalSizeChartBtn);
+      DOM.modalSizeChartBtn = newBtn;
+      
+      DOM.modalSizeChartBtn.addEventListener('click', () => {
+        const isHidden = DOM.modalSizeChartContainer.style.display === 'none';
+        DOM.modalSizeChartContainer.style.display = isHidden ? 'block' : 'none';
+        DOM.modalSizeChartBtn.textContent = isHidden ? 'Hide Size Chart' : 'View Size Chart';
+      });
+    } else {
+      DOM.modalSizeChartBtn.style.display = 'none';
+      DOM.modalSizeChartContainer.style.display = 'none';
+    }
 
     // WhatsApp inquiry
     const contact = dataCache.get('siteContent');
