@@ -1003,78 +1003,83 @@ select {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
-.brand-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
+.brand-blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  margin-top: 60px;
 }
 
-.premium-card {
-  background: var(--bg-card);
-  padding: 40px 30px;
+.brand-blog-item {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .brand-blog-item {
+    flex-direction: row;
+    gap: 80px;
+  }
+  
+  .brand-blog-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .brand-blog-item .blog-image,
+  .brand-blog-item .blog-content {
+    flex: 1;
+    min-width: 0; /* Prevent overflow */
+  }
+}
+
+.brand-blog-item .blog-image {
+  width: 100%;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  text-align: center;
-  transition: var(--transition);
-  position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
 }
 
-.premium-card::after {
+.brand-blog-item .blog-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(139, 0, 0, 0.05) 100%);
-  opacity: 0;
-  transition: var(--transition);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
 }
 
-.premium-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: var(--shadow-lg);
+.brand-blog-item .blog-image img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+  display: block;
 }
 
-.premium-card:hover::after {
-  opacity: 1;
+.brand-blog-item:hover .blog-image img {
+  transform: scale(1.05);
 }
 
-.premium-card .card-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 24px;
-  color: var(--gold);
-  background: rgba(201, 168, 76, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px;
-  transition: var(--transition);
+.brand-blog-item .blog-content {
+  padding: 0 20px;
 }
 
-.premium-card:hover .card-icon {
-  background: var(--primary);
-  color: var(--white);
-  transform: scale(1.1);
-}
-
-.premium-card h3 {
+.brand-blog-item h3 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   color: var(--white);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   letter-spacing: 1px;
 }
 
-.premium-card p {
+.brand-blog-item p {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   line-height: 1.8;
   font-weight: 300;
-  position: relative;
-  z-index: 2;
 }
 
 /* ============================================
@@ -1312,6 +1317,38 @@ select {
 
 .footer-links a:hover {
   color: var(--text);
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: var(--text-muted);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-social a:hover {
+  color: var(--white);
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
 }
 
 .footer-bottom {
@@ -2048,12 +2085,27 @@ select {
   }
 
   .expand-gallery {
-    flex-direction: column;
-    height: auto;
+    flex-direction: row;
+    height: 350px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    gap: 16px;
+    border-radius: 0; /* Let it bleed to edges if container padded, or keep radius if not */
+  }
+
+  .expand-gallery::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 
   .expand-gallery .gallery-item {
-    height: 200px;
+    flex: 0 0 85%;
+    height: 100%;
+    scroll-snap-align: center;
+    border-radius: var(--radius-md);
   }
 
   .search-results-overlay {

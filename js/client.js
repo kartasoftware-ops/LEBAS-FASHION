@@ -71,12 +71,16 @@
     expandGallery: document.getElementById('expandGallery'),
     // Content
     aboutText: document.getElementById('aboutText'),
+    aboutImage: document.getElementById('aboutImage'),
     philosophyText: document.getElementById('philosophyText'),
+    philosophyImage: document.getElementById('philosophyImage'),
     premiumText: document.getElementById('premiumText'),
+    premiumImage: document.getElementById('premiumImage'),
     // Contact
     contactPhone: document.getElementById('contactPhone'),
     contactEmail: document.getElementById('contactEmail'),
     contactAddress: document.getElementById('contactAddress'),
+    contactSocialList: document.getElementById('contactSocialList'),
     // Modal
     productModal: document.getElementById('productModal'),
     modalClose: document.getElementById('modalClose'),
@@ -95,7 +99,8 @@
     // Back to top
     backToTop: document.getElementById('backToTop'),
     // Footer
-    footerYear: document.getElementById('footerYear')
+    footerYear: document.getElementById('footerYear'),
+    footerSocial: document.getElementById('footerSocial')
   };
 
   // ============================================
@@ -278,14 +283,59 @@
   // RENDER: SITE CONTENT
   // ============================================
   function renderSiteContent(content) {
-    if (content.about && content.about.text) {
-      DOM.aboutText.textContent = content.about.text;
+    if (content.about) {
+      if (content.about.text) DOM.aboutText.textContent = content.about.text;
+      if (content.about.image && DOM.aboutImage) DOM.aboutImage.src = content.about.image;
     }
-    if (content.philosophy && content.philosophy.text) {
-      DOM.philosophyText.textContent = content.philosophy.text;
+    if (content.philosophy) {
+      if (content.philosophy.text) DOM.philosophyText.textContent = content.philosophy.text;
+      if (content.philosophy.image && DOM.philosophyImage) DOM.philosophyImage.src = content.philosophy.image;
     }
-    if (content.premium && content.premium.text) {
-      DOM.premiumText.textContent = content.premium.text;
+    if (content.premium) {
+      if (content.premium.text) DOM.premiumText.textContent = content.premium.text;
+      if (content.premium.image && DOM.premiumImage) DOM.premiumImage.src = content.premium.image;
+    }
+
+    // Social Links
+    if (content.social) {
+      let footerHtml = '';
+      let contactHtml = '';
+      const icons = {
+        facebook: '<svg viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        whatsapp: '<svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 21l1.65-3.8A9 9 0 1121 12a9 9 0 01-9 9 9 9 0 01-5.2-1.65L3 21z"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 10a.5.5 0 001 0V9a.5.5 0 00-1 0v1zm6 4a.5.5 0 001 0v-1a.5.5 0 00-1 0v1zm-4-1.5v1a3 3 0 003 3h1"/></svg>',
+        instagram: '<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line></svg>',
+        twitter: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>',
+        tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.95v7.45c-.01 1.94-.69 3.89-1.82 5.38-1.5 1.98-3.88 3.01-6.25 3.01-2.36 0-4.74-1.03-6.24-3.01-1.13-1.49-1.81-3.44-1.82-5.38.01-1.95.69-3.89 1.82-5.38 1.5-1.99 3.88-3.02 6.24-3.02 1.25 0 2.5.32 3.59.98v-4.25c-1.08-.43-2.25-.61-3.42-.56-2.07.03-4.14.73-5.74 2.05-1.37 1.14-2.34 2.76-2.65 4.49-.31 1.73-.04 3.59.81 5.16 1.09 2.01 3.03 3.48 5.25 4.02 2.22.54 4.67.24 6.64-.81 1.7-.89 2.99-2.42 3.55-4.25.56-1.83.56-3.86.53-5.82V.02h-4.48z"/></svg>',
+        linkedin: '<svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>'
+      };
+      
+      const labels = {
+        facebook: 'Facebook',
+        whatsapp: 'WhatsApp',
+        instagram: 'Instagram',
+        twitter: 'Twitter (X)',
+        tiktok: 'TikTok',
+        linkedin: 'LinkedIn'
+      };
+
+      for (const [platform, url] of Object.entries(content.social)) {
+        if (url && icons[platform]) {
+          footerHtml += `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${platform}">${icons[platform]}</a>`;
+          
+          contactHtml += `
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="contact-item" style="text-decoration:none;">
+            <div class="contact-icon">
+              ${icons[platform]}
+            </div>
+            <div>
+              <div class="contact-label">${labels[platform]}</div>
+              <div class="contact-value" style="color:var(--text); transition:color 0.3s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text)'">Follow us on ${labels[platform]}</div>
+            </div>
+          </a>`;
+        }
+      }
+      if (DOM.footerSocial) DOM.footerSocial.innerHTML = footerHtml;
+      if (DOM.contactSocialList) DOM.contactSocialList.innerHTML = contactHtml;
     }
   }
 
@@ -811,7 +861,7 @@
   }
 
   // ============================================
-  // CONTACT FORM (Web3Forms)
+  // CONTACT FORM (Firebase integration)
   // ============================================
   function setupContactForm() {
     const form = document.getElementById('contactForm');
@@ -823,41 +873,34 @@
       e.preventDefault();
       
       const formData = new FormData(form);
-      const accessKey = formData.get('access_key');
-      
-      // Verification logic
-      if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
-        if (typeof showToast === 'function') {
-          showToast('Please set your true Web3Forms Access Key in index.html to enable this form.', 'error');
-        }
-        return;
-      }
+      const name = formData.get('name') || '';
+      const email = formData.get('email') || '';
+      const phone = formData.get('phone') || '';
+      const industry = formData.get('industry') || '';
+      const message = formData.get('message') || '';
       
       const originalText = btn.textContent;
       btn.textContent = 'Sending...';
       btn.disabled = true;
       
       try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData
+        await db.ref('contactMessages').push({
+          name,
+          email,
+          phone,
+          industry,
+          message,
+          timestamp: Date.now(),
+          read: false
         });
         
-        const data = await response.json();
-        
-        if (data.success) {
-          if (typeof showToast === 'function') {
-            showToast('Message sent successfully! We will get back to you soon.', 'success');
-          }
-          form.reset();
-        } else {
-          if (typeof showToast === 'function') {
-            showToast(data.message || 'Something went wrong.', 'error');
-          }
+        if (typeof showToast === 'function') {
+          showToast('Message sent successfully! We will get back to you soon.', 'success');
         }
+        form.reset();
       } catch (err) {
         if (typeof showToast === 'function') {
-          showToast('Network error while sending message. Please try again.', 'error');
+          showToast('Failed to send message. Please try again.', 'error');
         }
       } finally {
         btn.textContent = originalText;

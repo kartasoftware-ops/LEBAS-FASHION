@@ -66,6 +66,7 @@
       products: 'Product Management',
       content: 'Site Content Editor',
       theme: 'Theme Control',
+      contactmsgs: 'Contact Messages',
       chatleads: 'Chat Leads'
     };
 
@@ -172,6 +173,11 @@
       dataCache.set('siteContent', snap.val());
       populateContentForm();
       populateThemeForm();
+    });
+
+    db.ref('contactMessages').on('value', snap => {
+      dataCache.set('contactMessages', snap.val());
+      renderContactMessagesTable();
     });
   }
 
@@ -697,18 +703,29 @@
           images: heroImages
         },
         about: {
-          text: document.getElementById('contentAbout').value.trim()
+          text: document.getElementById('contentAbout').value.trim(),
+          image: document.getElementById('contentAboutImage') ? document.getElementById('contentAboutImage').value.trim() : ''
         },
         philosophy: {
-          text: document.getElementById('contentPhilosophy').value.trim()
+          text: document.getElementById('contentPhilosophy').value.trim(),
+          image: document.getElementById('contentPhilosophyImage') ? document.getElementById('contentPhilosophyImage').value.trim() : ''
         },
         premium: {
-          text: document.getElementById('contentPremium').value.trim()
+          text: document.getElementById('contentPremium').value.trim(),
+          image: document.getElementById('contentPremiumImage') ? document.getElementById('contentPremiumImage').value.trim() : ''
         },
         contact: {
           phone: document.getElementById('contentPhone').value.trim(),
           email: document.getElementById('contentEmail').value.trim(),
           address: document.getElementById('contentAddress').value.trim()
+        },
+        social: {
+          facebook: document.getElementById('socialFacebook') ? document.getElementById('socialFacebook').value.trim() : '',
+          whatsapp: document.getElementById('socialWhatsapp') ? document.getElementById('socialWhatsapp').value.trim() : '',
+          instagram: document.getElementById('socialInstagram') ? document.getElementById('socialInstagram').value.trim() : '',
+          twitter: document.getElementById('socialTwitter') ? document.getElementById('socialTwitter').value.trim() : '',
+          tiktok: document.getElementById('socialTiktok') ? document.getElementById('socialTiktok').value.trim() : '',
+          linkedin: document.getElementById('socialLinkedin') ? document.getElementById('socialLinkedin').value.trim() : ''
         }
       };
 
@@ -785,17 +802,28 @@
     }
     if (content.about) {
       document.getElementById('contentAbout').value = content.about.text || '';
+      if (document.getElementById('contentAboutImage')) document.getElementById('contentAboutImage').value = content.about.image || '';
     }
     if (content.philosophy) {
       document.getElementById('contentPhilosophy').value = content.philosophy.text || '';
+      if (document.getElementById('contentPhilosophyImage')) document.getElementById('contentPhilosophyImage').value = content.philosophy.image || '';
     }
     if (content.premium) {
       document.getElementById('contentPremium').value = content.premium.text || '';
+      if (document.getElementById('contentPremiumImage')) document.getElementById('contentPremiumImage').value = content.premium.image || '';
     }
     if (content.contact) {
       document.getElementById('contentPhone').value = content.contact.phone || '';
       document.getElementById('contentEmail').value = content.contact.email || '';
       document.getElementById('contentAddress').value = content.contact.address || '';
+    }
+    if (content.social) {
+      if (document.getElementById('socialFacebook')) document.getElementById('socialFacebook').value = content.social.facebook || '';
+      if (document.getElementById('socialWhatsapp')) document.getElementById('socialWhatsapp').value = content.social.whatsapp || '';
+      if (document.getElementById('socialInstagram')) document.getElementById('socialInstagram').value = content.social.instagram || '';
+      if (document.getElementById('socialTwitter')) document.getElementById('socialTwitter').value = content.social.twitter || '';
+      if (document.getElementById('socialTiktok')) document.getElementById('socialTiktok').value = content.social.tiktok || '';
+      if (document.getElementById('socialLinkedin')) document.getElementById('socialLinkedin').value = content.social.linkedin || '';
     }
   }
 
@@ -920,8 +948,64 @@
       case 'category': deleteCategory(id, name); break;
       case 'subcategory': deleteSubcategory(id, name); break;
       case 'product': deleteProduct(id, name); break;
+      case 'contactmsg': deleteContactMessage(id, name); break;
     }
   };
+
+  // ============================================
+  // CONTACT MESSAGES
+  // ============================================
+  function renderContactMessagesTable() {
+    const msgsObj = dataCache.get('contactMessages');
+    const tbody = document.getElementById('contactMessagesTable');
+    if (!tbody) return;
+
+    if (!msgsObj) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--admin-text-dim);">No messages yet</td></tr>';
+      return;
+    }
+
+    const msgs = Object.entries(msgsObj).map(([id, val]) => ({ id, ...val }));
+    msgs.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+    if (msgs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--admin-text-dim);">No messages yet</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = msgs.map(m => {
+      const date = m.timestamp ? new Date(m.timestamp).toLocaleString() : '—';
+      return `
+      <tr>
+        <td style="white-space:nowrap;font-size:0.85rem;">${date}</td>
+        <td>
+          <div style="font-weight:600;">${escapeHtml(m.name || '—')}</div>
+          <div style="font-size:0.8rem;color:var(--admin-text-muted);">${escapeHtml(m.email || '—')}</div>
+        </td>
+        <td>${escapeHtml(m.phone || '—')}</td>
+        <td>
+          <div style="font-size:0.8rem;color:var(--admin-primary);margin-bottom:4px;">Industry: ${escapeHtml(m.industry || '—')}</div>
+          <div style="font-size:0.9rem;">${escapeHtml(m.message || '—')}</div>
+        </td>
+        <td>
+          <div class="table-actions">
+            <button class="btn btn-danger btn-sm" onclick="window._adminDelete('contactmsg','${m.id}','${escapeHtml(m.name || 'this message')}')">Delete</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function deleteContactMessage(id, name) {
+    showConfirm('Delete Message', `Are you sure you want to delete the message from "${name}"?`, async () => {
+      try {
+        await db.ref('contactMessages/' + id).remove();
+        showToast('Message deleted', 'success');
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    });
+  }
 
   // ============================================
   // LIVE CHAT
